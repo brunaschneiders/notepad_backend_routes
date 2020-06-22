@@ -40,7 +40,7 @@ server.get('/notes', (req,res) => {
 })
 
 server.post('/notes', verifyData, (req,res) => {
-    const {title, content, date, time} = req.body
+    const {title, content, date, time} = req.body;
 
     const note={
         title,
@@ -52,11 +52,54 @@ server.post('/notes', verifyData, (req,res) => {
     notes.push(note)
 
     return res.json({
-        result: 'Nota cadastrada com sucesso!',
+        result: 'Nota cadastrada com sucesso! Nota cadastrada:',
         note
     })
 })
 
+server.get('/notes/:id', (req,res) =>{
+    const{id} = req.params;
 
+    return res.json({
+        result: 'Nota encontrada:',
+        note: notes[id]
+    })
+})
+
+server.put('/notes/:id', verifyData, (req,res) =>{
+    const {title, content, date, time} = req.body
+
+    const{id} = req.params;
+    const note = {
+        title,
+        content,
+        date,
+        time
+    }
+
+    notes[id] = note;
+
+    return res.json({
+        result: 'Os dados da nota foram atualizados com sucesso! Nota atualizada:',
+        note
+    })
+})
+
+server.delete('/notes/:id', (req,res) =>{
+    const {title, content, date, time} = req.body
+    const{id} = req.params;
+    const note = {
+        title,
+        content,
+        date,
+        time
+    }
+
+    notes[id] = note;
+
+    return res.json({
+        result: 'A nota foi excluída com sucesso!'
+    })
+})
 
 server.listen(3000);
