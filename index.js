@@ -86,16 +86,9 @@ server.put('/notes/:id', verifyData, (req,res) =>{
 })
 
 server.delete('/notes/:id', (req,res) =>{
-    const {title, content, date, time} = req.body
-    const{id} = req.params;
-    const note = {
-        title,
-        content,
-        date,
-        time
-    }
+    const {id} = req.params;
 
-    notes[id] = note;
+    notes.splice(id,1);
 
     return res.json({
         result: 'A nota foi excluída com sucesso!'
